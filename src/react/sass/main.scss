@@ -1,0 +1,99 @@
+
+//IMPORTS
+@import "fa"; // Fontawesome — Remember to uncomment used icons in fa/scss/_icons.scss
+@import "bootstrap"; //Bootstrap (only grid). Edit bootstrap to include more.
+@import "keyframes";
+
+body {
+
+}
+
+
+#preview-bar {
+  position: fixed;
+  top: 0%;
+  right: 0%;
+  background-color: black;
+  padding: 1rem;
+  height: 100vh;
+  z-index: 1000000;
+  button {
+    display:block;
+    margin-bottom: 1rem;
+  }
+}
+
+img {
+  max-width: 100%;
+}
+
+.site-header {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  padding: 1rem 0;
+  background: #fff;
+
+  .logo {
+    color: $dark;
+    font-size: 1.4rem;
+  }
+
+  .site-navigation {
+    text-align: right;
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+
+      li {
+        display: inline-block;
+
+        a {
+          display: block;
+          color: $dark;
+          padding: .5rem 1rem;
+        }
+      }
+    }
+  }
+}
+
+.site-content {
+  padding: 8rem 0 0;
+
+  .page-image {
+    margin: 1rem 0;
+    width: 100%;
+  }
+
+  .page-header {
+    text-align: center;
+
+    h1 {
+      font-size: 4rem;
+    }
+  }
+
+  .page-content {
+    padding: 2rem 0;
+  }
+}
+
+.site-footer {
+  text-align: center;
+  padding: 4rem 0 8rem;
+}
+
+//MISC
+.loader {
+  border: .125rem solid rgba($dark, .25); /* Light grey */
+  border-top: .125rem solid $dark; /* Blue */
+  border-radius: 50%;
+  width: 2rem;
+  height: 2rem;
+  animation: spin .4s linear infinite;
+  margin: 3rem auto;
+}
