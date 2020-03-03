@@ -83,7 +83,7 @@ class TemplateIndex extends React.Component {
 				<h1>W</h1>
 
 				<div className="input-group">
-					<label>Combat regen percentage</label>
+					<label>CRP</label>
 					<input type="text" value={this.state.conf_combat_regen} onChange={this.onChangeCombatRegen.bind(this)}/>
 				</div>
 
@@ -109,7 +109,7 @@ class TemplateIndex extends React.Component {
 					<tr>
 						<th>I</th>
 						<th>Init</th>
-						<th>Innervate bonus</th>
+						<th>Bonus</th>
 						{minutes.map((mins) => {
 							return <td>{mins / 60} min</td>
 						})}
@@ -121,12 +121,12 @@ class TemplateIndex extends React.Component {
 
 
 						let persec = (parseFloat(item.m) + spi) / 5 ;
-						let innervate = ((((item.s / 2) / 5) * (4 - this.state.conf_combat_regen / 100))) * 20;
+						let innervate = ((((item.s / 2) / 5) * (5 - this.state.conf_combat_regen / 100))) * 20;
 
 						return <tr>
 							<td>{item.label}</td>
 							<td>{init}</td>
-							<td>{innervate}</td>
+							<td>{innervate.toFixed(1)}</td>
 							{minutes.map((mins, i) => {
 
 								let inner = 0;
@@ -138,7 +138,7 @@ class TemplateIndex extends React.Component {
 								}
 
 								let num = init + inner + (mins * persec);
-								return <td>{num}</td>
+								return <td>{num} (avg. {((num / mins) * 5).toFixed(1)})</td>
 							})}
 						</tr>
 					})}
