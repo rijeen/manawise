@@ -11,7 +11,8 @@ class TemplateIndex extends React.Component {
 			m: 0,
 			label: '',
 			inner: false,
-			conf_combat_regen: 0
+			conf_combat_regen: 0,
+			class: 'druid'
 		}
 	}
 
@@ -68,6 +69,13 @@ class TemplateIndex extends React.Component {
 		})
 	}
 
+	onChangeClass(e)
+	{
+		this.setState({
+			class: e.target.value
+		})
+	}
+
 	onChangeInner(e)
 	{
 		this.setState({
@@ -90,6 +98,15 @@ class TemplateIndex extends React.Component {
 			<div className="container">
 
 				<h1>W</h1>
+
+				<div className="input-group">
+					<label>Class</label>
+					<select value={this.state.class} onChange={this.onChangeClass.bind(this)}>
+						<option value="druid">Druid/Shaman/Paladin</option>
+						<option value="priest">Priest/Mage</option>
+					</select>
+				</div>
+
 
 				<div className="input-group">
 					<label>CRP</label>
@@ -130,13 +147,14 @@ class TemplateIndex extends React.Component {
 					{this.state.items.map((item) => {
 
 						let init = item.i * 15;
-						let spi = (item.s / 2) * (this.state.conf_combat_regen / 100);
-
+						let spiritCoff = (this.state.class == 'druid') ? 5 : 4;
+						let itemPerFive = ((item.s / spiritCoff) * 2.5);
+						let spi = itemPerFive * (this.state.conf_combat_regen / 100);
 
 						let persec = (parseFloat(item.m) + spi) / 5 ;
 						let innervate = 0;
 						if (this.state.inner) {
-							innervate = ((((item.s / 2) / 5) * (5 - this.state.conf_combat_regen / 100))) * 20
+							innervate = (((itemPerFive / 5) * (5 - this.state.conf_combat_regen / 100))) * 20
 						}
 
 						return <tr>
@@ -154,7 +172,7 @@ class TemplateIndex extends React.Component {
 								}
 
 								let num = init + inner + (mins * persec);
-								return <td>{num} (avg. {((num / mins) * 5).toFixed(1)})</td>
+								return <td>{num.toFixed(1)} (avg. {((num / mins) * 5).toFixed(1)})</td>
 							})}
 						</tr>
 					})}
