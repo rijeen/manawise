@@ -9,7 +9,9 @@ class TemplateIndex extends React.Component {
 			i: 0,
 			s: 0,
 			m: 0,
-			label: ''
+			label: '',
+			inner: false,
+			conf_combat_regen: 0
 		}
 	}
 
@@ -66,6 +68,13 @@ class TemplateIndex extends React.Component {
 		})
 	}
 
+	onChangeInner(e)
+	{
+		this.setState({
+			inner: !this.state.inner
+		})
+	}
+
 	onChangeCombatRegen(e)
 	{
 		this.setState({
@@ -99,9 +108,13 @@ class TemplateIndex extends React.Component {
 
 				<label>S</label>
 				<input type="number" value={this.state.s} onChange={this.onChangeS.bind(this)}/>
-
+				<br />
 				<label>M</label>
 				<input type="number" value={this.state.m} onChange={this.onChangeM.bind(this)}/>
+
+				<br />
+				<label>With inner</label>
+				<input type="checkbox" value="inner" checked={this.state.inner} onChange={this.onChangeInner.bind(this)} />
 
 				<button onClick={this.addItem.bind(this)}>Add</button>
 
@@ -121,7 +134,10 @@ class TemplateIndex extends React.Component {
 
 
 						let persec = (parseFloat(item.m) + spi) / 5 ;
-						let innervate = ((((item.s / 2) / 5) * (5 - this.state.conf_combat_regen / 100))) * 20;
+						let innervate = 0;
+						if (this.state.inner) {
+							innervate = ((((item.s / 2) / 5) * (5 - this.state.conf_combat_regen / 100))) * 20
+						}
 
 						return <tr>
 							<td>{item.label}</td>
