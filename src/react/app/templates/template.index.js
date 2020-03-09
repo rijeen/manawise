@@ -39,52 +39,44 @@ class TemplateIndex extends React.Component {
 		}
 	}
 
-	onChangeLabel(e)
-	{
+	onChangeLabel(e) {
 		this.setState({
 			label: e.target.value
 		})
 	}
 
-	onChangeI(e)
-	{
+	onChangeI(e) {
 		this.setState({
 			i: e.target.value
 		})
 	}
 
-	onChangeS(e)
-	{
+	onChangeS(e) {
 		this.setState({
 			s: e.target.value
 		})
 	}
 
 
-
-	onChangeM(e)
-	{
+	onChangeM(e) {
 		this.setState({
 			m: e.target.value
 		})
 	}
 
-	onChangeClass(e)
-	{
+	onChangeClass(e) {
 		this.setState({
 			class: e.target.value
 		})
 	}
 
-	onChangeInner(e)
-	{
+	onChangeInner(e) {
 		this.setState({
 			inner: !this.state.inner
 		})
 	}
 
-	onChangeCombatRegen(e)
-	{
+	onChangeCombatRegen(e) {
 		this.setState({
 			conf_combat_regen: e.target.value
 		})
@@ -92,56 +84,82 @@ class TemplateIndex extends React.Component {
 
 	render() {
 
-		let minutes = [60, 120, 180, 240, 300, 360, 420, 480, 540, 600];
+		let minutes = [60, 120, 180, 240, 300, 450, 600];
 
 		return <div className="site-content">
 			<div className="container">
+				<h1>ManaWise</h1>
+				<div className="row">
+					<div className="col-6">
+						<h4>Settings</h4>
+						<form>
+							<div className="form-row">
 
-				<h1>W</h1>
+								<div className="form-group col">
+									<label>Class</label>
+									<select value={this.state.class} className="form-control" onChange={this.onChangeClass.bind(this)}>
+										<option value="druid">Druid/Shaman/Paladin</option>
+										<option value="priest">Priest/Mage</option>
+									</select>
+								</div>
 
-				<div className="input-group">
-					<label>Class</label>
-					<select value={this.state.class} onChange={this.onChangeClass.bind(this)}>
-						<option value="druid">Druid/Shaman/Paladin</option>
-						<option value="priest">Priest/Mage</option>
-					</select>
+								<div className="form-group col-3">
+									<label>Combat regen %</label>
+									<input type="text" className="form-control" value={this.state.conf_combat_regen} onChange={this.onChangeCombatRegen.bind(this)}/>
+								</div>
+
+								<div className="form-group col-3">
+									<label>Enable innervate</label>
+									<input type="checkbox" className="form-control" value="inner" checked={this.state.inner} onChange={this.onChangeInner.bind(this)}/>
+								</div>
+							</div>
+						</form>
+					</div>
 				</div>
+				<div className="row">
+					<div className="col-8">
+						<h4>Add item/enchant/stats</h4>
+						<form>
+						<div className="form-row">
+							<div className="form-group col-4">
+								<label>Label</label>
+								<input type="text" className="form-control" value={this.state.label} onChange={this.onChangeLabel.bind(this)}/>
+							</div>
 
+							<div className="form-group col-2">
+								<label>Int</label>
+								<input type="number" className="form-control" value={this.state.i} onChange={this.onChangeI.bind(this)}/>
+							</div>
 
-				<div className="input-group">
-					<label>CRP</label>
-					<input type="text" value={this.state.conf_combat_regen} onChange={this.onChangeCombatRegen.bind(this)}/>
+							<div className="form-group col-2">
+								<label>Spirit</label>
+								<input type="number" className="form-control" value={this.state.s} onChange={this.onChangeS.bind(this)}/>
+							</div>
+
+							<div className="form-group col-2">
+								<label>Mana per five</label>
+								<input type="number" className="form-control" value={this.state.m} onChange={this.onChangeM.bind(this)}/>
+							</div>
+
+							<div className="col-2">
+								<label>&nbsp;</label>
+								<button className="btn btn-primary btn-block" disabled={!this.state.label} onClick={this.addItem.bind(this)}>Add</button>
+							</div>
+
+						</div>
+						</form>
+					</div>
 				</div>
-
-				<div className="input-group">
-					<label>Label</label>
-					<input type="text" value={this.state.label} onChange={this.onChangeLabel.bind(this)}/>
-				</div>
-
-				<div className="input-group">
-					<label>I</label>
-					<input type="number" value={this.state.i} onChange={this.onChangeI.bind(this)}/>
-				</div>
-
-				<label>S</label>
-				<input type="number" value={this.state.s} onChange={this.onChangeS.bind(this)}/>
-				<br />
-				<label>M</label>
-				<input type="number" value={this.state.m} onChange={this.onChangeM.bind(this)}/>
-
-				<br />
-				<label>With inner</label>
-				<input type="checkbox" value="inner" checked={this.state.inner} onChange={this.onChangeInner.bind(this)} />
-
-				<button onClick={this.addItem.bind(this)}>Add</button>
-
+				<div className="row">
+					<div className="col">
 				<table className="table table-bordered">
 					<tr>
-						<th>I</th>
-						<th>Init</th>
-						<th>Bonus</th>
+						<th>Label</th>
+						<th>Initial mana</th>
+						{this.state.inner &&
+						<th>Innervate</th>}
 						{minutes.map((mins) => {
-							return <td>{mins / 60} min</td>
+							return <th>{mins / 60} min</th>
 						})}
 					</tr>
 					{this.state.items.map((item) => {
@@ -151,7 +169,7 @@ class TemplateIndex extends React.Component {
 						let itemPerFive = ((item.s / spiritCoff) * 2.5);
 						let spi = itemPerFive * (this.state.conf_combat_regen / 100);
 
-						let persec = (parseFloat(item.m) + spi) / 5 ;
+						let persec = (parseFloat(item.m) + spi) / 5;
 						let innervate = 0;
 						if (this.state.inner) {
 							innervate = (((itemPerFive / 5) * (5 - this.state.conf_combat_regen / 100))) * 20
@@ -160,7 +178,8 @@ class TemplateIndex extends React.Component {
 						return <tr>
 							<td>{item.label}</td>
 							<td>{init}</td>
-							<td>{innervate.toFixed(1)}</td>
+							{this.state.inner &&
+							<td>{innervate.toFixed(1)}</td>}
 							{minutes.map((mins, i) => {
 
 								let inner = 0;
@@ -172,11 +191,15 @@ class TemplateIndex extends React.Component {
 								}
 
 								let num = init + inner + (mins * persec);
-								return <td>{num.toFixed(1)} (avg. {((num / mins) * 5).toFixed(1)})</td>
+								return <td>{((num / mins) * 5).toFixed(1)} ({num.toFixed(1)})</td>
 							})}
 						</tr>
 					})}
 				</table>
+
+
+					</div>
+				</div>
 
 			</div>
 		</div>
