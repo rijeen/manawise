@@ -11,7 +11,7 @@ module.exports = {
     output: {
         filename: 'bundle.js',
         path: __dirname+'/build/',
-        publicPath: "/"
+        publicPath: "/manawise/build/"
     },
     mode: 'production',
     optimization: {
