@@ -71,8 +71,8 @@ module.exports = {
             'process.env.NODE_ENV': '"production"'
         }),
 	    new HtmlWebPackPlugin({
-		    template: "./src/react/build/index.php",
-		    filename: "index.php",
+		    template: "./src/react/build/index.html",
+		    filename: "index.html",
 		    hash: true,
 		    removeComments: false
 	    }),
