@@ -2,6 +2,193 @@ import React from 'react';
 
 import { Link } from 'react-router-dom';
 
+const classTalents = {
+	druid: [
+		/*
+		{
+			id: 'druid_ht',
+			name: 'Imp. Healing touch',
+			options: [
+				{value: 0, label: 'None'},
+				{value: 1, label: '1p (0.1s)'},
+				{value: 2, label: '2p (0.2s)'},
+				{value: 3, label: '3p (0.3s)'},
+				{value: 4, label: '4p (0.4s)'},
+				{value: 5, label: '5p (0.5s)'}
+			],
+			default: 5
+		},*/
+		{
+			id: 'druid_mg',
+			name: 'Moonglow',
+			options: [
+				{value: 0, label: 'None'},
+				{value: 1, label: '1p (3%)'},
+				{value: 2, label: '2p (6%)'},
+				{value: 3, label: '3p (9%)'}
+			],
+			default: 0
+		},
+		{
+			id: 'druid_ts',
+			name: 'Tranquil Spirit',
+			options: [
+				{value: 0, label: 'None'},
+				{value: 1, label: '1p (2%)'},
+				{value: 2, label: '2p (4%)'},
+				{value: 3, label: '3p (6%)'},
+				{value: 4, label: '4p (8%)'},
+				{value: 5, label: '5p (10%)'}
+			],
+			default: 0
+		},
+		{
+			id: 'druid_ng',
+			name: "Nature's grace",
+			options: [
+				{value: 'false', label: 'Disabled'},
+				{value: 'true', label: 'Enabled'}
+			],
+			default: false
+		},
+		{
+			id: 'druid_imprg',
+			name: 'Imp. Regrowth',
+			options: [
+				{value: 0, label: 'None'},
+				{value: 1, label: '1p (10%)'},
+				{value: 2, label: '2p (20%)'},
+				{value: 3, label: '3p (30%)'},
+				{value: 4, label: '4p (40%)'},
+				{value: 5, label: '5p (50%)'}
+			],
+			default: 0
+		}
+	],
+	shaman: [
+		{
+			id: 'shaman_hw',
+			name: 'Imp. Healing Wave',
+			options: [
+				{value: 0, label: 'None'},
+				{value: 1, label: '1p (0.1s)'},
+				{value: 2, label: '2p (0.2s)'},
+				{value: 3, label: '3p (0.3s)'},
+				{value: 4, label: '4p (0.4s)'},
+				{value: 5, label: '5p (0.5s)'}
+			],
+			default: 5
+		},
+		{
+			id: 'shaman_tf',
+			name: 'Tidal focus',
+			options: [
+				{value: 0, label: 'None'},
+				{value: 1, label: '1p (1%)'},
+				{value: 2, label: '2p (2%)'},
+				{value: 3, label: '3p (3%)'},
+				{value: 4, label: '4p (4%)'},
+				{value: 5, label: '5p (5%)'}
+			],
+			default: 0
+		},
+		{
+			id: 'shaman_tm',
+			name: 'Tidal mastery',
+			options: [
+				{value: 0, label: 'None'},
+				{value: 1, label: '1p (1%)'},
+				{value: 2, label: '2p (2%)'},
+				{value: 3, label: '3p (3%)'},
+				{value: 4, label: '4p (4%)'},
+				{value: 5, label: '5p (5%)'}
+			],
+			default: 0
+		},
+		{
+			id: 'shaman_tofo',
+			name: 'Totemic Focus',
+			options: [
+				{value: 0, label: 'None'},
+				{value: 1, label: '1p (5%)'},
+				{value: 2, label: '2p (10%)'},
+				{value: 3, label: '3p (15%)'},
+				{value: 4, label: '4p (20%)'},
+				{value: 5, label: '5p (25%)'}
+			],
+			default: 0
+		},
+		/*
+		{
+			id: 'shaman_p',
+			name: 'Purification',
+			options: [
+				{value: 0, label: 'None'},
+				{value: 1, label: '1p (2%)'},
+				{value: 2, label: '2p (4%)'},
+				{value: 3, label: '3p (6%)'},
+				{value: 4, label: '4p (8%)'},
+				{value: 5, label: '5p (10%)'}
+			],
+			default: 0
+		}*/
+	],
+	priest: [
+		{
+			id: 'priest_df',
+			name: 'Divine Fury',
+			options: [
+				{value: 0, label: 'None'},
+				{value: 1, label: '1p (0.1s)'},
+				{value: 2, label: '2p (0.2s)'},
+				{value: 3, label: '3p (0.3s)'},
+				{value: 4, label: '4p (0.4s)'},
+				{value: 5, label: '5p (0.5s)'}
+			],
+			default: 5
+		},
+		{
+			id: 'priest_ih',
+			name: 'Imp. Healing',
+			options: [
+				{value: 0, label: 'None'},
+				{value: 1, label: '1p (5%)'},
+				{value: 2, label: '2p (10%)'},
+				{value: 3, label: '3p (15%)'}
+			],
+			default: 0
+		},
+		/*
+		{
+			id: 'priest_sh',
+			name: 'Spiritual healing',
+			options: [
+				{value: 0, label: 'None'},
+				{value: 1, label: '1p (2%)'},
+				{value: 2, label: '2p (4%)'},
+				{value: 3, label: '3p (6%)'},
+				{value: 4, label: '4p (8%)'},
+				{value: 5, label: '5p (10%)'}
+			],
+			default: 0
+		},*/
+		{
+			id: 'priest_ma',
+			name: 'Mental agility',
+			options: [
+				{value: 0, label: 'None'},
+				{value: 1, label: '1p (2%)'},
+				{value: 2, label: '2p (4%)'},
+				{value: 3, label: '3p (6%)'},
+				{value: 4, label: '4p (8%)'},
+				{value: 5, label: '5p (10%)'}
+			],
+			default: 0
+		},
+
+	]
+}
+
 class TemplateLast extends React.Component {
 
 	constructor(props) {
@@ -12,7 +199,7 @@ class TemplateLast extends React.Component {
 			s: 100,
 			m: 0,
 			crit: 5,
-			activity: 100,
+			activity: 95,
 
 			//item
 			label: '',
@@ -23,18 +210,34 @@ class TemplateLast extends React.Component {
 			group: null,
 			conf_combat_regen: 0,
 			class: 'druid',
-			cons_inner: false,
-			cons_tide: false,
-			cons_pots: 0,
-			cons_runes: 0,
-			cons_flask: false,
 			suggestions: [],
 
+			//cons
+			cons: {
+				inner: false,
+				tide: false,
+				pots: 0,
+				runes: 0,
+				flask: false,
+				spring: 0
+			},
+
 			//talents
-			talent_druid_mg: 0,
-			talent_druid_ts: 0,
-			talent_druid_ng: false,
-			talent_druid_imprg: 0
+			talents: {
+				druid_mg: 0,
+				druid_ts: 0,
+				druid_ng: false,
+				druid_imprg: 0,
+				shaman_tf: 0,
+				shaman_hw: 0,
+				shaman_tm: 0,
+				shaman_p: 0,
+				shaman_tofo: 0,
+				priest_sh: 0,
+				priest_ih: 0,
+				priest_ma: 0,
+				priest_df: 0
+			}
 		}
 		this.spell_groups = [
 			{
@@ -130,7 +333,230 @@ class TemplateLast extends React.Component {
 				timeCallback: () => {
 					return 3 + (8 * this.calculateSpellCastTime('ht', 2.5)) + this.calculateSpellCastTime('rg', 2)
 				}
-			}
+			},
+
+			//Shaman
+			//48 = 120/2.5
+			{
+				type: 'shaman',
+				label: 'Raid heal & totem refresh',
+				desc: 'Chain heal (rank 1) & wf + str totem avg',
+				cost: 260+(250+275)/48,
+				time: 2.5,
+				costCallback: () => {
+					return (this.calculateSpellManaCost('totem', 250+275)/48) + this.calculateSpellManaCost('ch', 260);
+				},
+				timeCallback: () => {
+					return this.calculateSpellCastTime('ch', 2.5)
+				}
+			},
+			{
+				type: 'shaman',
+				label: 'Chain heal (rank 1)',
+				cost: 260,
+				time: 2.5,
+				costCallback: () => {
+					return this.calculateSpellManaCost('ch', 260);
+				},
+				timeCallback: () => {
+					return this.calculateSpellCastTime('ch', 2.5)
+				}
+			},
+			{
+				type: 'shaman',
+				label: 'Chain heal (rank 2)',
+				time: 2.5,
+				costCallback: () => {
+					return this.calculateSpellManaCost('ch', 315);
+				},
+				timeCallback: () => {
+					return this.calculateSpellCastTime('ch', 2.5)
+				}
+			},
+			{
+				type: 'shaman',
+				label: 'Chain heal (rank 3)',
+				time: 2.5,
+				costCallback: () => {
+					return this.calculateSpellManaCost('ch', 405);
+				},
+				timeCallback: () => {
+					return this.calculateSpellCastTime('ch', 2.5)
+				}
+			},
+			{
+				type: 'shaman',
+				label: 'Healing Wave (rank 4)',
+				cost: 155,
+				time: 3,
+				costCallback: () => {
+					return this.calculateSpellManaCost('hw', 155);
+				},
+				timeCallback: () => {
+					return this.calculateSpellCastTime('hw', 3)
+				}
+			},
+			{
+				type: 'shaman',
+				label: 'Healing Wave (rank 5)',
+				cost: 200,
+				time: 3,
+				costCallback: () => {
+					return this.calculateSpellManaCost('hw', 200);
+				},
+				timeCallback: () => {
+					return this.calculateSpellCastTime('hw', 3)
+				}
+			},
+			{
+				type: 'shaman',
+				label: 'Healing Wave (rank 6)',
+				cost: 265,
+				time: 3,
+				costCallback: () => {
+					return this.calculateSpellManaCost('hw', 265);
+				},
+				timeCallback: () => {
+					return this.calculateSpellCastTime('hw', 3)
+				}
+			},
+			{
+				type: 'shaman',
+				label: 'Lesser Healing Wave (rank 3)',
+				cost: 185,
+				time: 1.5,
+				costCallback: () => {
+					return this.calculateSpellManaCost('lhw', 185);
+				},
+				timeCallback: () => {
+					return this.calculateSpellCastTime('lhw', 1.5)
+				}
+			},
+
+			//Priest
+			{
+				type: 'priest',
+				label: 'Flash Heal (rank 3)',
+				cost: 185,
+				time: 1.5,
+				costCallback: () => {
+					return this.calculateSpellManaCost('fh', 185);
+				},
+				timeCallback: () => {
+					return this.calculateSpellCastTime('fh', 1.5)
+				}
+			},
+			/*
+			{
+				type: 'priest',
+				label: 'Flash Heal (rank 5)',
+				cost: 265,
+				time: 1.5,
+				costCallback: () => {
+					return this.calculateSpellManaCost('fh', 265);
+				},
+				timeCallback: () => {
+					return this.calculateSpellCastTime('fh', 1.5)
+				}
+			},*/
+			{
+				type: 'priest',
+				label: 'Heal (rank 1)',
+				cost: 155,
+				time: 3,
+				costCallback: () => {
+					return this.calculateSpellManaCost('h', 155);
+				},
+				timeCallback: () => {
+					return this.calculateSpellCastTime('h', 3)
+				}
+			},
+			{
+				type: 'priest',
+				label: 'Heal (rank 2)',
+				cost: 205,
+				time: 3,
+				costCallback: () => {
+					return this.calculateSpellManaCost('h', 205);
+				},
+				timeCallback: () => {
+					return this.calculateSpellCastTime('h', 3)
+				}
+			},
+			{
+				type: 'priest',
+				label: 'Heal (rank 3)',
+				cost: 255,
+				time: 3,
+				costCallback: () => {
+					return this.calculateSpellManaCost('h', 255);
+				},
+				timeCallback: () => {
+					return this.calculateSpellCastTime('h', 3)
+				}
+			},
+			{
+				type: 'priest',
+				label: 'Heal (rank 4)',
+				cost: 305,
+				time: 3,
+				costCallback: () => {
+					return this.calculateSpellManaCost('h', 305);
+				},
+				timeCallback: () => {
+					return this.calculateSpellCastTime('h', 3)
+				}
+			},
+			{
+				type: 'priest',
+				label: 'Greater Heal (rank 1)',
+				cost: 370,
+				time: 3,
+				costCallback: () => {
+					return this.calculateSpellManaCost('gh', 370);
+				},
+				timeCallback: () => {
+					return this.calculateSpellCastTime('gh', 3)
+				}
+			},
+			/*
+			{
+				type: 'priest',
+				label: 'Greater Heal (rank 2)',
+				cost: 455,
+				time: 3,
+				costCallback: () => {
+					return this.calculateSpellManaCost('gh', 455);
+				},
+				timeCallback: () => {
+					return this.calculateSpellCastTime('gh', 3)
+				}
+			},
+			{
+				type: 'priest',
+				label: 'Greater Heal (rank 3)',
+				cost: 545,
+				time: 3,
+				costCallback: () => {
+					return this.calculateSpellManaCost('gh', 545);
+				},
+				timeCallback: () => {
+					return this.calculateSpellCastTime('gh', 3)
+				}
+			},*/
+			{
+				type: 'priest',
+				label: 'Heal (rank 2) + Renew uptime',
+				desc: '1x renew + 6 heal',
+				cost: 410+(6*205),
+				time: 1.5+(3*6),
+				costCallback: () => {
+					return this.calculateSpellManaCost('renew', 410) + (6 * this.calculateSpellManaCost('gh', 205));
+				},
+				timeCallback: () => {
+					return 1.5 + (6 * this.calculateSpellCastTime('gh', 3))
+				}
+			},
 		];
 	}
 
@@ -215,43 +641,49 @@ class TemplateLast extends React.Component {
 	onChangeClass(e) {
 		this.setState({
 			class: e.target.value,
-			conf_combat_regen: 0
+			conf_combat_regen: 0,
+			spells: []
 		})
 	}
 
-	onChangeConsumable(type, e) {
+	onChangeInput(type, e) {
 
-		let obj = {};
+		let obj = {
+			cons: {... this.state.cons },
+			talents: {...this.state.talents}
+		};
 
 		switch (type) {
 			case 'inner':
-				obj.cons_inner = e.target.value == 'enabled';
-				break;
 			case 'tide':
-				obj.cons_tide = e.target.value == 'enabled';
-				break;
-			case 'pot':
-				obj.cons_pots = e.target.value;
-				break;
-			case 'rune':
-				obj.cons_runes = e.target.value;
-				break;
 			case 'flask':
-				obj.cons_flask = e.target.value == 'enabled';
+				obj.cons[type]  = e.target.value == 'enabled';
 				break;
-			case 'druid_ts':
-				obj.talent_druid_ts = e.target.value;
-				break;
-			case 'druid_mg':
-				obj.talent_druid_mg = e.target.value;
+			case 'pots':
+			case 'runes':
+			case 'spring':
+				obj.cons[type] = e.target.value;
 				break;
 			case 'druid_ng':
-				obj.talent_druid_ng = e.target.value == 'enabled';
+				obj.talents[type] = e.target.value == 'true';
 				break;
+			case 'druid_ts':
+			case 'druid_mg':
 			case 'druid_imprg':
-				obj.talent_druid_imprg = e.target.value;
+			case 'shaman_hw':
+			case 'shaman_tf':
+			case 'shaman_tm':
+			case 'shaman_p':
+			case 'shaman_tofo':
+			case 'priest_df':
+			case 'priest_ih':
+			case 'priest_sh':
+			case 'priest_ma':
+				obj.talents[type] = e.target.value;
 				break;
 		}
+
+		console.log(obj)
 
 		this.setState(obj)
 	}
@@ -306,12 +738,28 @@ class TemplateLast extends React.Component {
 
 		switch (spell) {
 			case 'ht':
-				newCost = newCost * (1 - (0.02 * this.state.talent_druid_ts));
-				newCost = newCost * (1 - (0.03 * this.state.talent_druid_mg));
+				newCost = newCost * (1 - (0.02 * this.state.talents.druid_ts));
+				newCost = newCost * (1 - (0.03 * this.state.talents.druid_mg));
 				break;
 			case 'rg':
 			case 'rj':
-				newCost = newCost * (1 - (0.03 * this.state.talent_druid_mg));
+				newCost = newCost * (1 - (0.03 * this.state.talents.druid_mg));
+				break;
+			case 'ch':
+			case 'hw':
+			case 'lhw':
+				newCost = newCost * (1 - (0.01 * this.state.talents.shaman_tf));
+				break;
+			case 'totem':
+				newCost = newCost * (1 - (0.05 * this.state.talents.shaman_tofo));
+				console.log('totemcost', cost, newCost)
+				break;
+			case 'h':
+			case 'gh':
+				newCost = newCost * (1 - (0.05 * this.state.talents.priest_ih));
+				break;
+			case 'renew':
+				newCost = newCost * (1 - (0.02 * this.state.talents.priest_ma));
 				break;
 		}
 
@@ -323,27 +771,54 @@ class TemplateLast extends React.Component {
 	{
 		let newTime = time;
 
-		if (this.state.talent_druid_ng) {
+		if (this.state.class == 'druid') {
+			if (this.state.talents.druid_ng) {
+				switch (spell) {
+					case 'rg':
+						let crit = this.state.crit + (this.state.talents.druid_imprg * 10);
+						newTime = time - (crit / 100 * 0.5)
+						break;
+					case 'ht':
+						newTime = time - (this.state.crit / 100 * 0.5)
+						break;
+				}
+			}
+		}
+
+		if (this.state.class == 'shaman') {
 			switch (spell) {
-				case 'rg':
-					let crit = this.state.crit + (this.state.talent_druid_imprg * 10);
-					newTime = time - (crit/100 * 0.5)
+				case 'hw':
+					newTime = time - (0.1 * this.state.talents.shaman_hw);
 					break;
-				case 'ht':
-					newTime = time - (this.state.crit/100 * 0.5)
+			}
+		}
+
+		if (this.state.class == 'priest') {
+			switch (spell) {
+				case 'h':
+				case 'gh':
+					newTime = time - (0.1 * this.state.talents.priest_df);
 					break;
 			}
 		}
 
 		return newTime;
 	}
-	/*
-			<option value="priest">Priest</option>
-											<option value="shaman">Shaman</option>
-											<option value="paladin">Paladin</option>
-	 */
 
 	render() {
+
+
+		let base = this.state.mana +(this.state.cons.flask ? 2000 : 0)
+		let spiritCoff = (this.state.class == 'druid') ? 5 : 4;
+		let spiritBase = (this.state.class == 'druid') ? 15 : 13;
+		let spiritPerSec = (spiritBase + (this.state.s / spiritCoff)) / 2;
+		let manaSpring = this.state.cons.spring > 0 ? (25 + (this.state.cons.spring > 1 ? 6.25 : 0)) / 5 : 0;
+
+		console.log(manaSpring)
+
+		let gain = (spiritPerSec * (this.state.conf_combat_regen / 100)) + (this.state.m / 5);
+		let crit = this.state.crit + (parseInt(this.state.talents.shaman_tm));
+
 
 		return <div className="site-content">
 			<div className="container">
@@ -362,8 +837,8 @@ class TemplateLast extends React.Component {
 										<label>Class</label>
 										<select value={this.state.class} className="form-control" onChange={this.onChangeClass.bind(this)}>
 											<option value="druid">Druid</option>
-
-
+											<option value="priest">Priest</option>
+											<option value="shaman">Shaman</option>
 										</select>
 									</div>
 									{['priest', 'druid'].indexOf(this.state.class) >= 0 &&
@@ -403,74 +878,56 @@ class TemplateLast extends React.Component {
 							<div className="col-md-4">
 								<h4>Talent settings</h4>
 								<div className="form-row">
-									<div className="form-group col-6">
-										<label>Moonglow</label>
-										<select className="form-control" defaultValue={this.state.talent_druid_mg} onChange={this.onChangeConsumable.bind(this, 'druid_mg')}>
-											<option value="0">None</option>
-											<option value="1">1p (3%)</option>
-											<option value="2">2p (6%)</option>
-											<option value="3">3p (9%)</option>
-										</select>
-									</div>
-									<div className="form-group col-6">
-										<label>Tranquil Spirit</label>
-										<select className="form-control" defaultValue={this.state.talent_druid_ts} onChange={this.onChangeConsumable.bind(this, 'druid_ts')}>
-											<option value="0">None</option>
-											<option value="1">1p (2%)</option>
-											<option value="2">2p (4%)</option>
-											<option value="3">3p (6%)</option>
-											<option value="4">4p (8%)</option>
-											<option value="5">5p (10%)</option>
-										</select>
-									</div>
-									<div className="form-group col-6">
-										<label>Nature's grace</label>
-										<select className="form-control" defaultValue={this.state.talent_druid_ng ? 'enabled' : 'disabled'} onChange={this.onChangeConsumable.bind(this, 'druid_ng')}>
-											<option value="disabled">Disabled</option>
-											<option value="enabled">Enabled</option>
-										</select>
-									</div>
-									<div className="form-group col-6">
-										<label>Imp. Regrowth</label>
-										<select className="form-control" defaultValue={this.state.talent_druid_imprg} onChange={this.onChangeConsumable.bind(this, 'druid_imprg')}>
-											<option value="0">None</option>
-											<option value="1">1p (10%)</option>
-											<option value="2">2p (20%)</option>
-											<option value="3">3p (30%)</option>
-											<option value="4">4p (40%)</option>
-											<option value="5">5p (50%)</option>
-										</select>
-									</div>
+									{classTalents[this.state.class].map((talent) => {
+										return <div className="form-group col-6">
+											<label>{talent.name}</label>
+											<select className="form-control" defaultValue={this.state.talents[talent.id]} onChange={this.onChangeInput.bind(this, talent.id)}>
+												{talent.options.map((option) => {
+													return <option value={option.value}>{option.label}</option>;
+												})}
+											</select>
+										</div>
+									})}
 								</div>
 							</div>
 							<div className="col-md-4">
-								<h4>Consumables settings</h4>
-
+								<h4>Raid settings</h4>
 								<div className="form-row">
 									<div className="form-group col-6">
 										<label>Innervate</label>
-										<select className="form-control" defaultValue={this.state.cons_inner ? 'enabled' : 'disabled'} onChange={this.onChangeConsumable.bind(this, 'inner')}>
+										<select className="form-control" defaultValue={this.state.cons.inner ? 'enabled' : 'disabled'} onChange={this.onChangeInput.bind(this, 'inner')}>
 											<option value="disabled">Disabled</option>
 											<option value="enabled">Enabled</option>
 										</select>
 									</div>
 									<div className="form-group col-6">
 										<label>Mana tide totem</label>
-										<select className="form-control" defaultValue={this.state.cons_tide ? 'enabled' : 'disabled'} onChange={this.onChangeConsumable.bind(this, 'tide')}>
+										<select className="form-control" defaultValue={this.state.cons.tide ? 'enabled' : 'disabled'} onChange={this.onChangeInput.bind(this, 'tide')}>
 											<option value="disabled">Disabled</option>
 											<option value="enabled">Enabled</option>
 										</select>
 									</div>
+									<div className="form-group col-6">
+										<label>Mana spring totem</label>
+										<select className="form-control" defaultValue={this.state.cons.spring} onChange={this.onChangeInput.bind(this, 'spring')}>
+											<option value="0">Disabled</option>
+											<option value="1">Yes</option>
+											<option value="2">Yes (with talents)</option>
+										</select>
+									</div>
+								</div>
+								<h4>Consumables settings</h4>
+								<div className="form-row">
 									<div className="form-group col-12">
 										<label>Flask of distilled wisdom</label>
-										<select className="form-control" defaultValue={this.state.cons_flask ? 'enabled' : 'disabled'} onChange={this.onChangeConsumable.bind(this, 'flask')}>
+										<select className="form-control" defaultValue={this.state.cons.flask ? 'enabled' : 'disabled'} onChange={this.onChangeInput.bind(this, 'flask')}>
 											<option value="disabled">Disabled</option>
 											<option value="enabled">Enabled</option>
 										</select>
 									</div>
 									<div className="form-group col-6">
 										<label>Major mana potion</label>
-										<select className="form-control" defaultValue={this.state.cons_pots} onChange={this.onChangeConsumable.bind(this, 'pot')}>
+										<select className="form-control" defaultValue={this.state.cons.pots} onChange={this.onChangeInput.bind(this, 'pots')}>
 											<option value={0}>None</option>
 											<option value={1}>1</option>
 											<option value={2}>2</option>
@@ -481,7 +938,7 @@ class TemplateLast extends React.Component {
 									</div>
 									<div className="form-group col-6">
 										<label>Runes</label>
-										<select className="form-control" defaultValue={this.state.cons_runes} onChange={this.onChangeConsumable.bind(this,'rune')}>
+										<select className="form-control" defaultValue={this.state.cons.runes} onChange={this.onChangeInput.bind(this,'runes')}>
 											<option value={0}>None</option>
 											<option value={1}>1</option>
 											<option value={2}>2</option>
@@ -512,22 +969,23 @@ class TemplateLast extends React.Component {
 								<label>Spells</label>
 								<select className="form-control" defaultValue={this.state.group} onChange={this.onChangeGroup.bind(this)}>
 									<option value="">...</option>
-									<option value="druid">Druid (most common)</option>
-									{false && <option value="priest">Priest</option>}
+									{this.state.class == 'druid' && <option value="druid">Druid (most common)</option>}
+									{this.state.class == 'priest' && <option value="priest">Priest</option>}
+									{this.state.class == 'shaman' && <option value="shaman">Shaman</option>}
 								</select>
 
 							</div>
-							<div className="col-5">
+							<div className="col-4">
 								<label>&nbsp;</label>
 								<button className="btn btn-primary btn-block" disabled={!this.state.group} onClick={this.addGroup.bind(this)}>Add group</button>
 							</div>
 						</div>
 					</div>
-					<div className="col-md-6 offset-2">
+					<div className="col-md-6">
 						<h4>or Add custom spell</h4>
 						<div>
 							<div className="form-row">
-								<div className="form-group col-6">
+								<div className="form-group col-4">
 									<label>Label</label>
 									<input type="text" className="form-control" value={this.state.label} onChange={this.onChangeLabel.bind(this)}/>
 									{false && this.state.suggestions.map((item) => {
@@ -551,6 +1009,13 @@ class TemplateLast extends React.Component {
 							<p><small>(Talents are not used, so add the real mana cost and cast time)</small></p>
 						</div>
 					</div>
+					<div className="col-md-2">
+						<h4>Effective stats</h4>
+						<small>Mana: {base}<br />MP5: {(gain+manaSpring)*5}<br />Crit: {crit}%</small>
+					</div>
+
+				</div>
+				<div className="row">
 
 				</div>
 				<div className="row">
@@ -579,58 +1044,51 @@ class TemplateLast extends React.Component {
 								}
 
 								let spent = (cost / duration) * (this.state.activity / 100);
-								let base = this.state.mana
 								let consumes = 0;
-
-								let spiritCoff = (this.state.class == 'druid') ? 5 : 4;
-								let spiritBase = (this.state.class == 'druid') ? 15 : 13;
-								let spiritPerSec = (spiritBase + (this.state.s / spiritCoff)) / 2;
 
 								let minimumLength = 0;
 
-								let gain = (spiritPerSec * (this.state.conf_combat_regen / 100)) + (this.state.m / 5);
-
-								if (this.state.cons_inner) {
+								if (this.state.cons.inner) {
 									consumes += (spiritPerSec * 20) * (5 - this.state.conf_combat_regen / 100);
 								}
 
-								if (this.state.cons_tide) {
+								if (this.state.cons.tide) {
 									consumes += (290 * 4);
 								}
 
-								if (this.state.cons_flask) {
+								if (this.state.cons.flask) {
 									consumes += 2000;
 								}
 
 								let oom = false;
-								let lastFull = Math.floor((base + consumes) / (spent - gain));
-								if (this.state.cons_pots > 0 || this.state.cons_runes > 0) {
+								let lastFull = Math.floor((base + consumes) / (spent - (gain + manaSpring)));
+								if (this.state.cons.pots > 0 || this.state.cons.runes > 0) {
 
 									let pot = 1800;
 									let rune = 1200;
 
-									if (this.state.cons_pots > 0) {
+									if (this.state.cons.pots > 0) {
 										consumes += pot;
-										minimumLength = 30 + (120 * (this.state.cons_pots - 1));
+										minimumLength = 30 + (120 * (this.state.cons.pots - 1));
 									}
 
-									if (this.state.cons_runes > 0) {
+									if (this.state.cons.runes > 0) {
 										consumes += rune;
-										let runeLength = 30 + (120 * (this.state.cons_runes - 1));
+										let runeLength = 30 + (120 * (this.state.cons.runes - 1));
 										if (runeLength > minimumLength) {
 											minimumLength = runeLength;
 										}
 									}
 
-									lastFull = Math.floor((base + consumes) / (spent - gain));
+									lastFull = Math.floor((base + consumes) / (spent - (gain + manaSpring)));
 
-									let maxConsume = this.state.cons_pots > this.state.cons_runes ? this.state.cons_pots : this.state.cons_runes;
+									let maxConsume = this.state.cons.pots > this.state.cons.runes ? this.state.cons.pots : this.state.cons.runes;
 									if (maxConsume > 1) {
 										let tempConsume = 0;
 										let tempLength = 30 + 120;
 										for (let i = 1; i <= maxConsume; i++) {
 
-											lastFull = Math.floor((base + consumes + tempConsume) / (spent - gain));
+											lastFull = Math.floor((base + consumes + tempConsume) / (spent - (gain + manaSpring)));
 
 											oom = minimumLength > lastFull;
 											
@@ -638,11 +1096,11 @@ class TemplateLast extends React.Component {
 												break;
 											}
 
-											if (i < this.state.cons_pots) {
+											if (i < this.state.cons.pots) {
 												tempConsume += pot;
 											}
 
-											if (i < this.state.cons_runes) {
+											if (i < this.state.cons.runes) {
 												tempConsume += rune;
 											}
 
