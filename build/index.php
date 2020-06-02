@@ -16,10 +16,10 @@
 		gtag('config', 'UA-160392263-1');
 	</script>
 
-</head>
+<link href="/style.min.css?2f7f4f4ef892f03899df" rel="stylesheet"></head>
 <body id="body">
 <div id="root" class="notranslate">
 
 </div>
-</body>
+<script type="text/javascript" src="/bundle.js?2f7f4f4ef892f03899df"></script></body>
 </html>

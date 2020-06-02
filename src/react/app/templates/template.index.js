@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from "react-router-dom";
 
 class TemplateIndex extends React.Component {
 
@@ -208,6 +209,7 @@ class TemplateIndex extends React.Component {
 			<div className="container">
 				<h1>ManaWise <span className="badge badge-light">Beta</span></h1>
 				<p>A tool to compare intellect, spirit and mana per five in WoW Classic</p>
+				<p><small>Wanna see how long your mana will last in a fight? <Link to={"/lastwise"}>Go to LastWise Mana calculator</Link></small></p>
 				<div className="row">
 					<div className="col-md-6 mb-4">
 						<h4>Character settings</h4>

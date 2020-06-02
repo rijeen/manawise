@@ -1,0 +1,11 @@
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteBase /
+RewriteRule ^style\.[0-9]+\.min\.css /style.min.css [L]
+RewriteRule ^bundle\.[0-9]+\.js /bundle.js [L]
+RewriteRule ^wp-json /wp/index.php [L]
+RewriteRule ^index\.php - [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /index.php [L]
+</IfModule>

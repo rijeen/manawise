@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import { Provider } from 'react-redux';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { HashRouter, Route, Switch } from 'react-router-dom';
 
 import polyfill from 'dynamic-polyfill';
 
@@ -15,6 +15,7 @@ import { init } from './app/actions';
 //sass
 import './sass/main.scss';
 import TemplateIndex from "./app/templates/template.index";
+import TemplateLast from "./app/templates/template.last";
 
 //Hot reloading
 if (module.hot) {
@@ -34,9 +35,10 @@ if (CONFIG.polyfill) {
 init();
 
 function __main() {
-    ReactDOM.render(<Provider store={store}><BrowserRouter>
+    ReactDOM.render(<Provider store={store}><HashRouter>
         <Switch>
+            <Route path="/lastwise" component={TemplateLast} />
             <Route path="/" component={TemplateIndex} />
         </Switch>
-    </BrowserRouter></Provider>, document.getElementById('root'));
+    </HashRouter></Provider>, document.getElementById('root'));
 }
