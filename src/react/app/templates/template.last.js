@@ -63,6 +63,15 @@ const classTalents = {
 				{value: 5, label: '5p (50%)'}
 			],
 			default: 0
+		},
+		{
+			id: 'druid_idol',
+			name: 'Idol of Health',
+			options: [
+				{value: 'false', label: 'No'},
+				{value: 'true', label: 'Yes'}
+			],
+			default: false
 		}
 	],
 	shaman: [
@@ -219,6 +228,9 @@ class TemplateLast extends React.Component {
 				pots: 0,
 				runes: 0,
 				flask: false,
+				soup: false,
+				mageblood: false,
+				oil: false,
 				spring: 0
 			},
 
@@ -228,6 +240,7 @@ class TemplateLast extends React.Component {
 				druid_ts: 0,
 				druid_ng: false,
 				druid_imprg: 0,
+				druid_idol: false,
 				shaman_tf: 0,
 				shaman_hw: 0,
 				shaman_tm: 0,
@@ -301,7 +314,7 @@ class TemplateLast extends React.Component {
 				desc: '1x rejuv + 6x HT3',
 				cost: 335 + (6 * 110),
 				costCallback: () => {
-					return this.calculateSpellManaCost('rj', 335)+(6 * this.calculateSpellManaCost('ht', 110))
+					return this.calculateSpellManaCost('rj', 360)+(6 * this.calculateSpellManaCost('ht', 110))
 				},
 				time: 13.5,
 				timeCallback: () => {
@@ -314,7 +327,7 @@ class TemplateLast extends React.Component {
 				desc: '1x rejuv + 5x HT4',
 				cost: 335 + (5 * 170),
 				costCallback: () => {
-					return this.calculateSpellManaCost('rj', 335)+(5 * this.calculateSpellManaCost('ht', 170))
+					return this.calculateSpellManaCost('rj', 360)+(5 * this.calculateSpellManaCost('ht', 170))
 				},
 				time: 14,
 				timeCallback: () => {
@@ -327,7 +340,7 @@ class TemplateLast extends React.Component {
 				desc: '2x rejuv + 8x HT4 + 1x Regrowth (rank 5)',
 				cost: 335 + (5 * 170),
 				costCallback: () => {
-					return (2*this.calculateSpellManaCost('rj', 335))+(8 * this.calculateSpellManaCost('ht', 170))+this.calculateSpellManaCost('rg', 420)
+					return (2*this.calculateSpellManaCost('rj', 360))+(8 * this.calculateSpellManaCost('ht', 170))+this.calculateSpellManaCost('rg', 420)
 				},
 				time: 25,
 				timeCallback: () => {
@@ -654,9 +667,15 @@ class TemplateLast extends React.Component {
 		};
 
 		switch (type) {
+			case 'flask':
+			case 'soup':
+			case 'mageblood':
+			case 'oil':
+				obj.cons[type]  = e.target.checked;
+				break;
 			case 'inner':
 			case 'tide':
-			case 'flask':
+
 				obj.cons[type]  = e.target.value == 'enabled';
 				break;
 			case 'pots':
@@ -665,6 +684,7 @@ class TemplateLast extends React.Component {
 				obj.cons[type] = e.target.value;
 				break;
 			case 'druid_ng':
+			case 'druid_idol':
 				obj.talents[type] = e.target.value == 'true';
 				break;
 			case 'druid_ts':
@@ -772,14 +792,23 @@ class TemplateLast extends React.Component {
 		let newTime = time;
 
 		if (this.state.class == 'druid') {
+
+			if (this.state.talents.druid_idol) {
+				switch (spell) {
+					case 'ht':
+						newTime = time - 0.15;
+						break;
+				}
+			}
+
 			if (this.state.talents.druid_ng) {
 				switch (spell) {
 					case 'rg':
 						let crit = this.state.crit + (this.state.talents.druid_imprg * 10);
-						newTime = time - (crit / 100 * 0.5)
+						newTime = newTime - (crit / 100 * 0.5)
 						break;
 					case 'ht':
-						newTime = time - (this.state.crit / 100 * 0.5)
+						newTime = newTime - (this.state.crit / 100 * 0.5)
 						break;
 				}
 			}
@@ -813,8 +842,19 @@ class TemplateLast extends React.Component {
 		let spiritBase = (this.state.class == 'druid') ? 15 : 13;
 		let spiritPerSec = (spiritBase + (this.state.s / spiritCoff)) / 2;
 		let manaSpring = this.state.cons.spring > 0 ? (25 + (this.state.cons.spring > 1 ? 6.25 : 0)) / 5 : 0;
+		let consumesMP5 = 0;
 
-		console.log(manaSpring)
+		if (this.state.cons.soup) {
+			consumesMP5 += 8 / 5;
+		}
+
+		if (this.state.cons.mageblood) {
+			consumesMP5 += 12 / 5;
+		}
+
+		if (this.state.cons.oil) {
+			consumesMP5 += 12 / 5;
+		}
 
 		let gain = (spiritPerSec * (this.state.conf_combat_regen / 100)) + (this.state.m / 5);
 		let crit = this.state.crit + (parseInt(this.state.talents.shaman_tm));
@@ -918,14 +958,34 @@ class TemplateLast extends React.Component {
 								</div>
 								<h4>Consumables settings</h4>
 								<div className="form-row">
-									<div className="form-group col-12">
-										<label>Flask of distilled wisdom</label>
-										<select className="form-control" defaultValue={this.state.cons.flask ? 'enabled' : 'disabled'} onChange={this.onChangeInput.bind(this, 'flask')}>
-											<option value="disabled">Disabled</option>
-											<option value="enabled">Enabled</option>
-										</select>
+									<div className="form-group col-7">
+										<label>Buffs & Elixirs</label>
+										<div className="form-check small">
+											<input className="form-check-input" type="checkbox" value="flask" id="check_flask" defaultChecked={this.state.cons.flask} onChange={this.onChangeInput.bind(this, 'flask')} />
+											<label className="form-check-label " htmlFor="check_flask">
+												Flask of distilled wisdom
+											</label>
+										</div>
+										<div className="form-check small">
+											<input className="form-check-input" type="checkbox" value="cons_nightfin" id="check_soup" defaultChecked={this.state.cons.soup} onChange={this.onChangeInput.bind(this, 'soup')} />
+											<label className="form-check-label " htmlFor="check_soup">
+												Nightfin Soup
+											</label>
+										</div>
+										<div className="form-check small">
+											<input className="form-check-input" type="checkbox" value="cons_mageblood" id="check_mageblood" defaultChecked={this.state.cons.mageblood} onChange={this.onChangeInput.bind(this, 'mageblood')} />
+											<label className="form-check-label" htmlFor="check_mageblood">
+												Mageblood potion
+											</label>
+										</div>
+										<div className="form-check small">
+											<input className="form-check-input" type="checkbox" value="cons_oil" id="check_oil" defaultChecked={this.state.cons.oil} onChange={this.onChangeInput.bind(this, 'oil')} />
+											<label className="form-check-label" htmlFor="check_oil">
+												Brilliant mana oil
+											</label>
+										</div>
 									</div>
-									<div className="form-group col-6">
+									<div className="form-group col-5">
 										<label>Major mana potion</label>
 										<select className="form-control" defaultValue={this.state.cons.pots} onChange={this.onChangeInput.bind(this, 'pots')}>
 											<option value={0}>None</option>
@@ -934,9 +994,9 @@ class TemplateLast extends React.Component {
 											<option value={3}>3</option>
 											<option value={4}>4</option>
 											<option value={5}>5</option>
+
 										</select>
-									</div>
-									<div className="form-group col-6">
+										<br />
 										<label>Runes</label>
 										<select className="form-control" defaultValue={this.state.cons.runes} onChange={this.onChangeInput.bind(this,'runes')}>
 											<option value={0}>None</option>
@@ -946,6 +1006,9 @@ class TemplateLast extends React.Component {
 											<option value={4}>4</option>
 											<option value={5}>5</option>
 										</select>
+									</div>
+									<div className="form-group col-5">
+
 									</div>
 								</div>
 
@@ -1011,7 +1074,7 @@ class TemplateLast extends React.Component {
 					</div>
 					<div className="col-md-2">
 						<h4>Effective stats</h4>
-						<small>Mana: {base}<br />MP5: {(gain+manaSpring)*5}<br />Crit: {crit}%</small>
+						<small>Mana: {base}<br />MP5: {(gain+manaSpring+consumesMP5)*5}<br />Crit: {crit}%</small>
 					</div>
 
 				</div>
@@ -1056,12 +1119,9 @@ class TemplateLast extends React.Component {
 									consumes += (290 * 4);
 								}
 
-								if (this.state.cons.flask) {
-									consumes += 2000;
-								}
 
 								let oom = false;
-								let lastFull = Math.floor((base + consumes) / (spent - (gain + manaSpring)));
+								let lastFull = Math.floor((base + consumes) / (spent - (gain + manaSpring + consumesMP5)));
 								if (this.state.cons.pots > 0 || this.state.cons.runes > 0) {
 
 									let pot = 1800;
@@ -1080,7 +1140,7 @@ class TemplateLast extends React.Component {
 										}
 									}
 
-									lastFull = Math.floor((base + consumes) / (spent - (gain + manaSpring)));
+									lastFull = Math.floor((base + consumes) / (spent - (gain + manaSpring + consumesMP5)));
 
 									let maxConsume = this.state.cons.pots > this.state.cons.runes ? this.state.cons.pots : this.state.cons.runes;
 									if (maxConsume > 1) {
@@ -1088,7 +1148,7 @@ class TemplateLast extends React.Component {
 										let tempLength = 30 + 120;
 										for (let i = 1; i <= maxConsume; i++) {
 
-											lastFull = Math.floor((base + consumes + tempConsume) / (spent - (gain + manaSpring)));
+											lastFull = Math.floor((base + consumes + tempConsume) / (spent - (gain + manaSpring + consumesMP5)));
 
 											oom = minimumLength > lastFull;
 											
