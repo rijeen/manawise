@@ -283,6 +283,90 @@ class TemplateLast extends React.Component {
 			},
 			{
 				type: 'druid',
+				label: 'Healing Touch (rank 6)',
+				desc: 'HT6 spam "Patchwerk style"',
+				cost: 335,
+				costCallback: () => {
+					return this.calculateSpellManaCost('ht', 335)
+				},
+				time: 3,
+				timeCallback: () => {
+					return this.calculateSpellCastTime('ht', 3);
+				}
+
+			},
+			{
+				type: 'druid',
+				label: 'Healing Touch (rank 7)',
+				desc: 'HT7 spam "Patchwerk style"',
+				cost: 405,
+				costCallback: () => {
+					return this.calculateSpellManaCost('ht', 405)
+				},
+				time: 3,
+				timeCallback: () => {
+					return this.calculateSpellCastTime('ht', 3);
+				}
+
+			},
+			{
+				type: 'druid',
+				label: 'Rejuvenation (rank 4)',
+				desc: 'Rejuvenation raid healing',
+				cost: 105,
+				costCallback: () => {
+					return this.calculateSpellManaCost('rj', 105)
+				},
+				time: 1.5,
+				timeCallback: () => {
+					return this.calculateSpellCastTime('rj', 1.5);
+				}
+
+			},
+			{
+				type: 'druid',
+				label: 'Rejuvenation (rank 7)',
+				desc: 'Rejuvenation raid healing',
+				cost: 195,
+				costCallback: () => {
+					return this.calculateSpellManaCost('rj', 195)
+				},
+				time: 1.5,
+				timeCallback: () => {
+					return this.calculateSpellCastTime('rj', 1.5);
+				}
+
+			},
+			{
+				type: 'druid',
+				label: 'Rejuvenation (rank 11)',
+				desc: 'Rejuvenation raid healing',
+				cost: 360,
+				costCallback: () => {
+					return this.calculateSpellManaCost('rj', 360)
+				},
+				time: 1.5,
+				timeCallback: () => {
+					return this.calculateSpellCastTime('rj', 1.5);
+				}
+
+			},
+			{
+				type: 'druid',
+				label: 'Rejuvenation mix',
+				desc: 'Rejuvenation raid healing (r11 + r7 + ht3)',
+				cost: 360+195+110,
+				costCallback: () => {
+					return this.calculateSpellManaCost('rj', 360) + this.calculateSpellManaCost('rj', 195) + this.calculateSpellManaCost('ht', 110)
+				},
+				time: 5,
+				timeCallback: () => {
+					return this.calculateSpellCastTime('rj', 3) + this.calculateSpellCastTime('ht', 2);
+				}
+
+			},
+			{
+				type: 'druid',
 				label: 'Regrowth (rank 3)',
 				desc: 'Regrowth Raid healing',
 				cost: 280,
