@@ -72,7 +72,16 @@ const classTalents = {
 				{value: 'true', label: 'Yes'}
 			],
 			default: false
-		}
+		},
+		{
+			id: 'druid_t3_4p',
+			name: 'T3 4 set bonus',
+			options: [
+				{value: 'false', label: 'No'},
+				{value: 'true', label: 'Yes'}
+			],
+			default: false
+		},
 	],
 	shaman: [
 		{
@@ -241,6 +250,7 @@ class TemplateLast extends React.Component {
 				druid_ng: false,
 				druid_imprg: 0,
 				druid_idol: false,
+				druid_t3_4p: false,
 				shaman_tf: 0,
 				shaman_hw: 0,
 				shaman_tm: 0,
@@ -396,7 +406,7 @@ class TemplateLast extends React.Component {
 				type: 'druid',
 				label: 'Tank mix (HT3 + Rejuv)',
 				desc: '1x rejuv + 6x HT3',
-				cost: 335 + (6 * 110),
+				cost: 360 + (6 * 110),
 				costCallback: () => {
 					return this.calculateSpellManaCost('rj', 360)+(6 * this.calculateSpellManaCost('ht', 110))
 				},
@@ -409,7 +419,7 @@ class TemplateLast extends React.Component {
 				type: 'druid',
 				label: 'Tank mix (HT4 + Rejuv)',
 				desc: '1x rejuv + 5x HT4',
-				cost: 335 + (5 * 170),
+				cost: 360 + (5 * 170),
 				costCallback: () => {
 					return this.calculateSpellManaCost('rj', 360)+(5 * this.calculateSpellManaCost('ht', 170))
 				},
@@ -422,7 +432,7 @@ class TemplateLast extends React.Component {
 				type: 'druid',
 				label: 'Tank HoT (HT4 + Rejuv + RG5)',
 				desc: '2x rejuv + 8x HT4 + 1x Regrowth (rank 5)',
-				cost: 335 + (5 * 170),
+				cost: (2 * 360) + (8 * 170) + 420,
 				costCallback: () => {
 					return (2*this.calculateSpellManaCost('rj', 360))+(8 * this.calculateSpellManaCost('ht', 170))+this.calculateSpellManaCost('rg', 420)
 				},
@@ -769,6 +779,7 @@ class TemplateLast extends React.Component {
 				break;
 			case 'druid_ng':
 			case 'druid_idol':
+			case 'druid_t3_4p':
 				obj.talents[type] = e.target.value == 'true';
 				break;
 			case 'druid_ts':
@@ -865,6 +876,12 @@ class TemplateLast extends React.Component {
 			case 'renew':
 				newCost = newCost * (1 - (0.02 * this.state.talents.priest_ma));
 				break;
+		}
+
+		if (this.state.class == 'druid') {
+			if (this.state.talents.druid_t3_4p) {
+				newCost = newCost * 0.97;
+			}
 		}
 
 
@@ -1191,6 +1208,7 @@ class TemplateLast extends React.Component {
 								}
 
 								let spent = (cost / duration) * (this.state.activity / 100);
+								let originalSpent = (spell.cost / duration) * (this.state.activity / 100);
 								let consumes = 0;
 
 								let minimumLength = 0;
@@ -1262,9 +1280,9 @@ class TemplateLast extends React.Component {
 
 								return <tr>
 									<td>{spell.label}<br />{spell.desc && <small>({spell.desc})</small>}</td>
-									<td>{cost}</td>
+									<td>{cost}<br /><small>(Original: {spell.cost})</small></td>
 									<td>{duration} sec {diff !== 0 && <small><br />({diff} sec)</small>}</td>
-									<td>{spent.toFixed(1)}</td>
+									<td>{spent.toFixed(1)}<br /><small>(Cost reduced = ~{((originalSpent - spent)*5).toFixed(0)}mp5)</small></td>
 									<td>{Math.floor(base / (spent - gain))} sec</td>
 									<td>{lastFull} sec {oom && <span className={"badge badge-danger"}>OOM!</span>}</td>
 								</tr>
